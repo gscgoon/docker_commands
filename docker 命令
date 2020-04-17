@@ -1,0 +1,24 @@
+帮助命令：
+	1.docker version docker版本信息
+	2.docker info 更详细的信息
+	3.docker --help 操作命令和参数
+	
+镜像命令：
+	1.docker images 列出本地主机上的镜像 参数-a,-q,--digests,--no-trunc，主要是-a，-q命令
+		-a:列出本地所有的镜像（含中间映像层）
+		-q:只显示镜像id
+		--digests:显示镜像的摘要信息
+		--no-trunc:显示完整的镜像信息
+		
+	2.docker search 某个XXX镜像名字（docker search [OPTIONS] 镜像名字，[OPTIONS]表示可省略的参数）
+		--no-trunc:显示完整的镜像信息
+		-s:列出收藏数不小于指定值的镜像(主要)
+		--automated : 只列出 automated build类型的镜像；
+		
+	3.docker pull 某个镜像名字
+		docker pull 镜像名字[:TAG]，默认是:lastest最新的，获取某版本就写具体版本
+		
+	4.docker rmi 镜像名字id(删除镜像)
+		单个：docker rmi -f 镜像id（强制删除）
+		多个：docker rmi -f 镜像名1:TAG 镜像名2:TAG ...（强制删除）
+		全部：docker rmi -f $(docker images -qa)（强制删除）类似数据库操作：delete from table where id in(id1,id2,...) ,$(docker images -qa)查出所有的镜像id
