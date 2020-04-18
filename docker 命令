@@ -22,3 +22,57 @@
 		单个：docker rmi -f 镜像id（强制删除）
 		多个：docker rmi -f 镜像名1:TAG 镜像名2:TAG ...（强制删除）
 		全部：docker rmi -f $(docker images -qa)（强制删除）类似数据库操作：delete from table where id in(id1,id2,...) ,$(docker images -qa)查出所有的镜像id
+		
+容器命令：（有镜像才能创建容器，这是根本前提）
+	1.新建并启动容器 docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+		options
+			--name="容器新名字": 为容器指定一个名称
+			-d: 后台运行容器，并返回容器ID，也即启动守护式容器
+			-i：以交互模式运行容器，通常与 -t 同时使用
+			-t：为容器重新分配一个伪输入终端，通常与 -i 同时使用
+			-P: 随机端口映射
+			-p: 指定端口映射，有以下四种格式
+				  ip:hostPort:containerPort
+				  ip::containerPort
+				  hostPort:containerPort
+	2.列出当前所有容器 docker ps [OPTIONS]
+		options
+			-a :列出当前所有正在运行的容器+历史上运行过的
+			-l :显示最近创建的容器
+			-n：显示最近n个创建的容器
+			-q :静默模式，只显示容器编号（和其他的配合使用）
+			--no-trunc :不截断输出
+	3.退出 两种方式
+		exit：容器停止退出    CTRL+Q+P：容器不停止退出
+	4.启动，重启，停止，强制停止
+		docker start ，restart，stop ，kill 容器名/容器id
+		docker run -it centos /bin/bash 交互式容器
+		docker run -d 容器名 守护式容器
+	5.删除已经停止的容器
+		docker rm 容器名/容器id 区别于镜像删除（docker rmi 镜像名/镜像id）
+		删除多个:
+			1. docker rm -f $(docker ps -a -q)类比镜像多个删除
+			2. docker ps -a -q | xargs docker rm（这个命令不是太明白）
+	6.启动守护式容器（docker run -d 容器名）
+		docker run -d centos /bin/sh -c "while true;do echo hello zzyy;sleep 2;done"（这个命令不是太明白）
+		查看容器日志：
+			docker logs -f -t --tail 容器id
+				-t 是加入时间戳
+				-f 跟随最新的日志打印
+				--tail 数字 显示最后多少条
+		查看容器内运行的进程：
+			docker top 容器id
+		查看容器内部细节：
+			docker inspect 容器ID
+		进入正在运行的容器并以命令行交互：
+			1.docker exec -it 34c88bf9ac9c （/bin/bash可省略） 
+			2.docker attach 容器ID
+			二者区别；
+				attach >>>>直接进入容器启动命令的终端，不会启动新的进程
+				exec >>>>>>是在容器中打开新的终端，并且可以启动新的进程
+		拷贝容器内部文件到宿主机：
+			docker cp a6c955e49d92:/usr/local/two /usr/local/
+			容器id：文件路径 /usr/local/two
+			宿主机存储文件路径；/usr/local/
+		
+		
