@@ -65,7 +65,8 @@
 		查看容器内部细节：
 			docker inspect 容器ID
 		进入正在运行的容器并以命令行交互：
-			1.docker exec -it 34c88bf9ac9c （/bin/bash可省略） 
+			1.docker exec -it 34c88bf9ac9c （/bin/bash可省略）
+				1.1 docker exec -it redis redis-cli 启动redis客户端
 			2.docker attach 容器ID
 			二者区别；
 				attach >>>>直接进入容器启动命令的终端，不会启动新的进程
